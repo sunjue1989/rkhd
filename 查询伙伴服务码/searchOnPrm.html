@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代理商信息页面</title>
+		<link rel="stylesheet" href="./css/bootstrap.css">
+		<link rel="stylesheet" href="./css/style.css">
+		<script type="text/javascript" src="./js/jquery-3.7.1.min.js"></script>
+		<script type="text/javascript" src="./js/bootstrap.js"></script>
+		<script type="text/javascript" src="/js/jssdk/neoLapp.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="warn scrolling-text">
+				<span><a style="color:red">请勿将服务码信息透露给非本公司人员，以免代理商身份被冒用。</a></span>
+			</div>
+			<div class="welcome">
+				<span><a id="name" style="color:blue">伙伴</a> 你好,以下是您所在公司的服务码信息:</span>
+			</div>
+			<div class="info-row">
+				<div class="info-field">
+					<span class="field-label color1">代理商名称</span>
+					<p id="agentName" class="color1">N/A</p>
+				</div>
+				<div class="info-field">
+					<span class="field-label color2">伙伴服务码</span>
+					<p id="serviceCode" class="color2">N/A</p>
+				</div>
+				<div class="info-field">
+					<span class="field-label color3">总时长</span>
+					<p id="time1" class="color3">0.0 <sub>分钟</sub></p>
+				</div>
+				<div class="info-field">
+					<span class="field-label color3">已用时长</span>
+					<p id="time2" class="color3">0.0 <sub>分钟</sub></p>
+				</div>
+				<div class="info-field">
+					<span class="field-label color3">剩余时长</span>
+					<p id="time3" class="color3">0.0 <sub>分钟</sub></p>
+				</div>
+			</div>
+			<div class="image-container">
+				<img src="./img/pic.png" alt="代理商图片">
+			</div>
+		</div>
+	</body>
+	<script>
+		let data = {
+			action: 'set_dialog_title',
+			actionParam: '代理商伙务码'
+		};
+		window.parent.postMessage(data, '*');
+	</script>
+	<script>
+		function getUrlParam(name) {
+			let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+			let r = location.search.substr(1).match(reg); //匹配目标参数
+			if (r != null) return unescape(r[2]);
+			return null;
+		}
+
+		window.onload = function() {
+			prmId = getUrlParam('recordId');
+			lapp.connection.invoke({
+				url: "/rest/data/v2.0/scripts/api/xsy/getPrmCode?userId=0",
+				method: "GET"
+			}).then(
+				res => {
+					console.log(res); // 打印失败的返回结果
+					document.getElementById('name').innerHTML = res.data.NAME;
+					var label = "<sub class=\"color4\">&nbsp分钟</sub>";
+					if (res.data.STATUS === true) {
+						document.getElementById('agentName').innerHTML = res.data.AGENT;
+						document.getElementById('serviceCode').innerHTML = res.data.CODE;
+						document.getElementById('time1').innerHTML = res.data.total_time + label;
+						document.getElementById('time2').innerHTML = res.data.time2 + label;
+						document.getElementById('time3').innerHTML = res.data.time3 + label;
+					}
+				},
+				err => {
+					console.log(err); // 打印失败的返回结果
+				}
+			)
+		}
+	</script>
+</html>

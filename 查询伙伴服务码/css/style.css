@@ -1,0 +1,70 @@
+body, html {  
+    height: 100%;  
+    margin: 0;  
+    display: flex;  
+    justify-content: center;  
+    align-items: center;  
+    font-family: Arial, sans-serif;  
+}  
+  
+.container {  
+    text-align: center;  
+	border: 0.125rem solid #ccc;
+}
+.welcome{
+	text-align: left;
+	padding-bottom:15px;
+	border-bottom:2px solid #ccc;
+	margin:10px 0px 30px;
+}
+
+.warn{
+	text-align: right;
+	padding-bottom:5px;
+	margin:5px 0px 5px;
+}
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-340px);
+  }
+}
+ 
+.scrolling-text {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: scroll 10s infinite alternate;
+}
+.info-row {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: center;  
+    width: 100%;  
+    max-width: 800px; /* 根据需要调整 */  
+}  
+  
+.info-field {  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+    margin: 0 10px;  
+}  
+  
+.field-label {  
+    font-weight: bold;  
+}  
+  
+.color1 { color: #ff4500; }  
+.color2 { color: #008000; }  
+.color3 { color: #0000ff; }  
+.color4 { color: #000;}
+  
+.image-container img {
+	max-width:100%;
+	max-height: 100%;
+    object-fit: cover;  
+    display: block; /* 移除图片下方的默认间距 */  
+    margin: 20px auto 0; /* 上下间距和水平居中 */  
+}
